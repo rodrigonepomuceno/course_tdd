@@ -1,0 +1,12 @@
+{
+    "cSpell.words": [
+        "codegen",
+        "mobx",
+        "mockito",
+        "screenutil",
+        "slidy"
+    ],
+    "editor.maxTokenizationLineLength": 120,
+    "dart.lineLength": 120,
+    "dart.maxLogLineLength": 120
+}
