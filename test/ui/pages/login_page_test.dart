@@ -12,7 +12,9 @@ void main() {
   LoginPresenter presenter;
   StreamController<String> emailErrorController;
   StreamController<String> passwordErrorController;
+  StreamController<String> mainErrorController;
   StreamController<bool> isFormaValidController;
+  StreamController<bool> isLoadingController;
 
   Future<void> loadPage(WidgetTester tester) async {
     presenter = LoginPresenterSpy();
@@ -23,7 +25,13 @@ void main() {
     when(presenter.passwordErrorStream).thenAnswer((_) => passwordErrorController.stream);
 
     isFormaValidController = StreamController<bool>();
-    when(presenter.isFormaValidController).thenAnswer((_) => isFormaValidController.stream);
+    when(presenter.isFormaValidStream).thenAnswer((_) => isFormaValidController.stream);
+
+    isLoadingController = StreamController<bool>();
+    when(presenter.isLoadingStream).thenAnswer((_) => isLoadingController.stream);
+
+    mainErrorController = StreamController<String>();
+    when(presenter.mainErrorStream).thenAnswer((_) => mainErrorController.stream);
 
     final loginPage = MaterialApp(home: LoginPage(presenter));
     await tester.pumpWidget(loginPage);
@@ -33,6 +41,8 @@ void main() {
     emailErrorController.close();
     passwordErrorController.close();
     isFormaValidController.close();
+    isLoadingController.close();
+    mainErrorController.close();
   });
 
   testWidgets('Should load with correct initial state', (WidgetTester tester) async {
@@ -48,6 +58,7 @@ void main() {
     final button = tester.widget<RaisedButton>(find.byType(RaisedButton));
 
     expect(button.onPressed, null);
+    expect(find.byType(CircularProgressIndicator), findsNothing);
   });
 
   testWidgets('Should call validate with correct values', (WidgetTester tester) async {
@@ -124,5 +135,54 @@ void main() {
     await tester.pump(); //força um renderização dos compoenntes em tela
     final button = tester.widget<RaisedButton>(find.byType(RaisedButton));
     expect(button.onPressed, null);
+  });
+
+  testWidgets('Should call authentication on form submit', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isFormaValidController.add(true);
+    await tester.pump();
+    await tester.tap(find.byType(RaisedButton));
+    await tester.pump();
+
+    verify(presenter.auth()).called(1);
+  });
+
+  testWidgets('Should present loading', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingController.add(true);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+  });
+
+  testWidgets('Should hide loading', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    isLoadingController.add(true);
+    await tester.pump();
+
+    isLoadingController.add(false);
+    await tester.pump();
+
+    expect(find.byType(CircularProgressIndicator), findsNothing);
+  });
+
+  testWidgets('Should present error message if authentication if fails', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    mainErrorController.add('main error');
+    await tester.pump();
+
+    expect(find.text('main error'), findsOneWidget);
+  });
+
+  testWidgets('Should close streams on dispose', (WidgetTester tester) async {
+    await loadPage(tester);
+
+    addTearDown(() {
+      verify(presenter.dispose()).called(1);
+    });
   });
 }
