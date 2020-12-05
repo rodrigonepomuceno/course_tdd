@@ -5,18 +5,15 @@ void showLoading(BuildContext context) {
     context: context,
     barrierDismissible: false,
     child: SimpleDialog(
-      children: [
+      children: <Widget>[
         Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+          children: <Widget>[
             CircularProgressIndicator(),
             SizedBox(height: 10),
-            Text(
-              'Aguarde...',
-              textAlign: TextAlign.center,
-            )
+            Text('Aguarde...', textAlign: TextAlign.center),
           ],
-        )
+        ),
       ],
     ),
   );

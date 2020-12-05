@@ -1,15 +1,33 @@
 import 'dart:async';
-import 'package:course_tdd/domain/helpers/helpers.dart';
 
-import '../../domain/usecases/uses_cases.dart';
 import 'package:meta/meta.dart';
+
+import '../../ui/pages/pages.dart';
+
+import '../../domain/helpers/helpers.dart';
+import '../../domain/usecases/usecases.dart';
+
 import '../protocols/protocols.dart';
 
-class StreamLoginPresenter {
+class LoginState {
+  String email;
+  String password;
+  String emailError;
+  String passwordError;
+  String mainError;
+  bool isLoading = false;
+
+  bool get isFormValid => emailError == null
+    && passwordError == null
+    && email != null
+    && password != null;
+}
+
+class StreamLoginPresenter implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
+  
   var _controller = StreamController<LoginState>.broadcast();
-
   var _state = LoginState();
 
   Stream<String> get emailErrorStream => _controller?.stream?.map((state) => state.emailError)?.distinct();
@@ -47,17 +65,7 @@ class StreamLoginPresenter {
   }
 
   void dispose() {
-    _controller.close();
+    _controller?.close();
     _controller = null;
   }
-}
-
-class LoginState {
-  String email;
-  String password;
-  String emailError;
-  String passwordError;
-  bool isLoading = false;
-  String mainError;
-  bool get isFormValid => emailError == null && passwordError == null && email != null && password != null;
 }

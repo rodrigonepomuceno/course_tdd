@@ -1,10 +1,9 @@
-import 'package:course_tdd/ui/pages/pages.dart';
+import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/components.dart';
-import 'package:flutter/material.dart';
-
 import 'components/components.dart';
+import 'login_presenter.dart';
 
 class LoginPage extends StatefulWidget {
   final LoginPresenter presenter;
@@ -27,40 +26,43 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       body: Builder(
         builder: (context) {
-          widget.presenter.isLoadingStream.listen(
-            (isLoading) {
-              isLoading ? showLoading(context) : hideLoading(context);
-            },
-          );
+          widget.presenter.isLoadingStream.listen((isLoading) {
+            if (isLoading) {
+              showLoading(context);
+            } else {
+              hideLoading(context);
+            }
+          });
 
-          widget.presenter.mainErrorStream.listen(
-            (error) {
-              if (error != null) {
-                showErrorMessage(context, error);
-              }
-            },
-          );
+          widget.presenter.mainErrorStream.listen((error) {
+            if (error != null) {
+              showErrorMessage(context, error);
+            }
+          });
 
           return SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
+              children: <Widget>[
                 LoginHeader(),
-                HeadLine1(text: 'LOGIN'),
+                Headline1(text: 'Login'),
                 Padding(
                   padding: EdgeInsets.all(32),
                   child: Provider(
                     create: (_) => widget.presenter,
                     child: Form(
                       child: Column(
-                        children: [
+                        children: <Widget>[
                           EmailInput(),
-                          PasswordInput(),
+                          Padding(
+                            padding: EdgeInsets.only(top: 8, bottom: 32),
+                            child: PasswordInput(),
+                          ),
                           LoginButton(),
                           FlatButton.icon(
                             onPressed: () {},
                             icon: Icon(Icons.person),
-                            label: Text('Criar Conta'),
+                            label: Text('Criar Conta')
                           )
                         ],
                       ),
