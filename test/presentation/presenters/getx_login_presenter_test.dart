@@ -2,19 +2,17 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/ui/helpers/helpers.dart';
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/domain/usecases/usecases.dart';
-import 'package:course_tdd/presentation/presenters/presenters.dart';
-import 'package:course_tdd/presentation/protocols/protocols.dart';
+import 'package:ForDev/ui/helpers/helpers.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/domain/usecases/usecases.dart';
+import 'package:ForDev/presentation/presenters/presenters.dart';
+import 'package:ForDev/presentation/protocols/protocols.dart';
 
 import '../../mocks/mocks.dart';
 
 class ValidationSpy extends Mock implements Validation {}
-
 class AuthenticationSpy extends Mock implements Authentication {}
-
 class SaveCurrentAccountSpy extends Mock implements SaveCurrentAccount {}
 
 void main() {
@@ -27,9 +25,10 @@ void main() {
   AccountEntity account;
 
   PostExpectation mockValidationCall(String field) =>
-      when(validation.validate(field: field == null ? anyNamed('field') : field, input: anyNamed('input')));
+    when(validation.validate(field: field == null ? anyNamed('field') : field, input: anyNamed('input')));
 
-  void mockValidation({String field, ValidationError value}) => mockValidationCall(field).thenReturn(value);
+  void mockValidation({String field, ValidationError value}) =>
+    mockValidationCall(field).thenReturn(value);
 
   PostExpectation mockAuthenticationCall() => when(authentication.auth(any));
 
@@ -38,18 +37,24 @@ void main() {
     mockAuthenticationCall().thenAnswer((_) async => data);
   }
 
-  void mockAuthenticationError(DomainError error) => mockAuthenticationCall().thenThrow(error);
+  void mockAuthenticationError(DomainError error) =>
+    mockAuthenticationCall().thenThrow(error);
 
-  PostExpectation mockSaveCurrentAccountCall() => when(saveCurrentAccount.save(any));
+  PostExpectation mockSaveCurrentAccountCall() =>
+    when(saveCurrentAccount.save(any));
 
-  void mockSaveCurrentAccountError() => mockSaveCurrentAccountCall().thenThrow(DomainError.unexpected);
+  void mockSaveCurrentAccountError() =>
+    mockSaveCurrentAccountCall().thenThrow(DomainError.unexpected);
 
   setUp(() {
     validation = ValidationSpy();
     authentication = AuthenticationSpy();
     saveCurrentAccount = SaveCurrentAccountSpy();
     sut = GetxLoginPresenter(
-        validation: validation, authentication: authentication, saveCurrentAccount: saveCurrentAccount);
+      validation: validation,
+      authentication: authentication,
+      saveCurrentAccount: saveCurrentAccount
+    );
     email = faker.internet.email();
     password = faker.internet.password();
     mockValidation();

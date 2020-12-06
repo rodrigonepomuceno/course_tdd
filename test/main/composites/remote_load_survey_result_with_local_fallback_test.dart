@@ -2,15 +2,14 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/data/usecases/usecases.dart';
-import 'package:course_tdd/main/composites/composites.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/data/usecases/usecases.dart';
+import 'package:ForDev/main/composites/composites.dart';
 
 import '../../mocks/mocks.dart';
 
 class LocalLoadSurveyResultSpy extends Mock implements LocalLoadSurveyResult {}
-
 class RemoteLoadSurveyResultSpy extends Mock implements RemoteLoadSurveyResult {}
 
 void main() {
@@ -43,7 +42,10 @@ void main() {
     surveyId = faker.guid.guid();
     remote = RemoteLoadSurveyResultSpy();
     local = LocalLoadSurveyResultSpy();
-    sut = RemoteLoadSurveyResultWithLocalFallback(remote: remote, local: local);
+    sut = RemoteLoadSurveyResultWithLocalFallback(
+      remote: remote,
+      local: local
+    );
     mockRemoteLoadBySurvey();
     mockLocalLoadBySurvey();
   });

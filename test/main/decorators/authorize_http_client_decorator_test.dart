@@ -2,14 +2,12 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/data/cache/cache.dart';
-import 'package:course_tdd/data/http/http.dart';
-import 'package:course_tdd/main/decorators/decorators.dart';
+import 'package:ForDev/data/cache/cache.dart';
+import 'package:ForDev/data/http/http.dart';
+import 'package:ForDev/main/decorators/decorators.dart';
 
 class FetchSecureCacheStorageSpy extends Mock implements FetchSecureCacheStorage {}
-
 class DeleteSecureCacheStorageSpy extends Mock implements DeleteSecureCacheStorage {}
-
 class HttpClientSpy extends Mock implements HttpClient {}
 
 void main() {
@@ -33,11 +31,11 @@ void main() {
   void mockTokenError() => mockTokenCall().thenThrow(Exception());
 
   PostExpectation mockHttpResponseCall() => when(httpClient.request(
-        url: anyNamed('url'),
-        method: anyNamed('method'),
-        body: anyNamed('body'),
-        headers: anyNamed('headers'),
-      ));
+    url: anyNamed('url'),
+    method: anyNamed('method'),
+    body: anyNamed('body'),
+    headers: anyNamed('headers'),
+  ));
 
   void mockHttpResponse() {
     httpResponse = faker.randomGenerator.string(50);
@@ -53,9 +51,10 @@ void main() {
     deleteSecureCacheStorage = DeleteSecureCacheStorageSpy();
     httpClient = HttpClientSpy();
     sut = AuthorizeHttpClientDecorator(
-        fetchSecureCacheStorage: fetchSecureCacheStorage,
-        deleteSecureCacheStorage: deleteSecureCacheStorage,
-        decoratee: httpClient);
+      fetchSecureCacheStorage: fetchSecureCacheStorage,
+      deleteSecureCacheStorage: deleteSecureCacheStorage,
+      decoratee: httpClient
+    );
     url = faker.internet.httpUrl();
     method = faker.randomGenerator.string(10);
     body = {'any_key': 'any_value'};
@@ -75,7 +74,11 @@ void main() {
 
     await sut.request(url: url, method: method, body: body, headers: {'any_header': 'any_value'});
     verify(httpClient.request(
-        url: url, method: method, body: body, headers: {'x-access-token': token, 'any_header': 'any_value'})).called(1);
+      url: url,
+      method: method,
+      body: body,
+      headers: {'x-access-token': token, 'any_header': 'any_value'}
+    )).called(1);
   });
 
   test('Should return same result as decoratee', () async {

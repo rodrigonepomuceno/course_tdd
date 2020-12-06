@@ -3,7 +3,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/infra/cache/cache.dart';
+import 'package:ForDev/infra/cache/cache.dart';
 
 class FlutterSecureStorageSpy extends Mock implements FlutterSecureStorage {}
 
@@ -22,7 +22,8 @@ void main() {
 
   group('save', () {
     void mockSaveSecureError() =>
-        when(secureStorage.write(key: anyNamed('key'), value: anyNamed('value'))).thenThrow(Exception());
+      when(secureStorage.write(key: anyNamed('key'), value: anyNamed('value')))
+        .thenThrow(Exception());
 
     test('Should call save secure with correct values', () async {
       await sut.save(key: key, value: value);
@@ -40,7 +41,8 @@ void main() {
   });
 
   group('fetch', () {
-    PostExpectation mockFetchSecureCall() => when(secureStorage.read(key: anyNamed('key')));
+    PostExpectation mockFetchSecureCall() =>
+      when(secureStorage.read(key: anyNamed('key')));
 
     void mockFetchSecure() => mockFetchSecureCall().thenAnswer((_) async => value);
 
@@ -72,7 +74,8 @@ void main() {
   });
 
   group('delete', () {
-    void mockDeleteSecureError() => when(secureStorage.delete(key: anyNamed('key'))).thenThrow(Exception());
+    void mockDeleteSecureError() =>
+      when(secureStorage.delete(key: anyNamed('key'))).thenThrow(Exception());
 
     test('Should call delete with correct key', () async {
       await sut.delete(key);

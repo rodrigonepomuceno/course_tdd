@@ -5,9 +5,9 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:image_test_utils/image_test_utils.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:course_tdd/ui/helpers/helpers.dart';
-import 'package:course_tdd/ui/pages/pages.dart';
-import 'package:course_tdd/ui/pages/survey_result/components/components.dart';
+import 'package:ForDev/ui/helpers/helpers.dart';
+import 'package:ForDev/ui/pages/pages.dart';
+import 'package:ForDev/ui/pages/survey_result/components/components.dart';
 
 import '../../mocks/mocks.dart';
 import '../helpers/helpers.dart';

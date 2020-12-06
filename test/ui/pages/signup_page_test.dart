@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:course_tdd/ui/helpers/helpers.dart';
-import 'package:course_tdd/ui/pages/pages.dart';
+import 'package:ForDev/ui/helpers/helpers.dart';
+import 'package:ForDev/ui/pages/pages.dart';
 
 import '../helpers/helpers.dart';
 
@@ -99,7 +99,10 @@ void main() {
 
     emailErrorController.add(null);
     await tester.pump();
-    expect(find.descendant(of: find.bySemanticsLabel('Email'), matching: find.byType(Text)), findsOneWidget);
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Email'), matching: find.byType(Text)),
+      findsOneWidget
+    );
   });
 
   testWidgets('Should present name error', (WidgetTester tester) async {
@@ -115,7 +118,10 @@ void main() {
 
     nameErrorController.add(null);
     await tester.pump();
-    expect(find.descendant(of: find.bySemanticsLabel('Nome'), matching: find.byType(Text)), findsOneWidget);
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Nome'), matching: find.byType(Text)),
+      findsOneWidget
+    );
   });
 
   testWidgets('Should present password error', (WidgetTester tester) async {
@@ -131,7 +137,10 @@ void main() {
 
     passwordErrorController.add(null);
     await tester.pump();
-    expect(find.descendant(of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)), findsOneWidget);
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Senha'), matching: find.byType(Text)),
+      findsOneWidget
+    );
   });
 
   testWidgets('Should present passwordConfirmation error', (WidgetTester tester) async {
@@ -147,7 +156,10 @@ void main() {
 
     passwordConfirmationErrorController.add(null);
     await tester.pump();
-    expect(find.descendant(of: find.bySemanticsLabel('Confirmar senha'), matching: find.byType(Text)), findsOneWidget);
+    expect(
+      find.descendant(of: find.bySemanticsLabel('Confirmar senha'), matching: find.byType(Text)),
+      findsOneWidget
+    );
   });
 
   testWidgets('Should enable button if form is valid', (WidgetTester tester) async {

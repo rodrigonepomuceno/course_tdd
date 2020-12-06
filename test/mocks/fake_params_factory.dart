@@ -1,14 +1,17 @@
 import 'package:faker/faker.dart';
 
-import 'package:course_tdd/domain/usecases/usecases.dart';
+import 'package:ForDev/domain/usecases/usecases.dart';
 
 class FakeParamsFactory {
   static AddAccountParams makeAddAccount() => AddAccountParams(
-      name: faker.person.name(),
-      email: faker.internet.email(),
-      password: faker.internet.password(),
-      passwordConfirmation: faker.internet.password());
+    name: faker.person.name(),
+    email: faker.internet.email(),
+    password: faker.internet.password(),
+    passwordConfirmation: faker.internet.password()
+  );
 
-  static AuthenticationParams makeAuthentication() =>
-      AuthenticationParams(email: faker.internet.email(), secret: faker.internet.password());
+  static AuthenticationParams makeAuthentication() => AuthenticationParams(
+    email: faker.internet.email(),
+    secret: faker.internet.password()
+  );
 }

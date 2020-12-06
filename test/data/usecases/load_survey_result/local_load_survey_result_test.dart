@@ -2,10 +2,10 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/data/cache/cache.dart';
-import 'package:course_tdd/data/usecases/usecases.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/data/cache/cache.dart';
+import 'package:ForDev/data/usecases/usecases.dart';
 
 import '../../../mocks/mocks.dart';
 
@@ -43,21 +43,23 @@ void main() {
     test('Should return surveyResult on success', () async {
       final surveyResult = await sut.loadBySurvey(surveyId: surveyId);
 
-      expect(
-          surveyResult,
-          SurveyResultEntity(surveyId: data['surveyId'], question: data['question'], answers: [
-            SurveyAnswerEntity(
-              image: data['answers'][0]['image'],
-              answer: data['answers'][0]['answer'],
-              percent: 40,
-              isCurrentAnswer: true,
-            ),
-            SurveyAnswerEntity(
-              answer: data['answers'][1]['answer'],
-              percent: 60,
-              isCurrentAnswer: false,
-            )
-          ]));
+      expect(surveyResult, SurveyResultEntity(
+        surveyId: data['surveyId'],
+        question: data['question'],
+        answers: [
+          SurveyAnswerEntity(
+            image: data['answers'][0]['image'],
+            answer: data['answers'][0]['answer'],
+            percent: 40,
+            isCurrentAnswer: true,
+          ),
+          SurveyAnswerEntity(
+            answer: data['answers'][1]['answer'],
+            percent: 60,
+            isCurrentAnswer: false,
+          )
+        ]
+      ));
     });
 
     test('Should throw UnexpectedError if cache is empty', () async {
@@ -173,15 +175,17 @@ void main() {
       Map json = {
         'surveyId': surveyResult.surveyId,
         'question': surveyResult.question,
-        'answers': [
-          {
-            'image': surveyResult.answers[0].image,
-            'answer': surveyResult.answers[0].answer,
-            'percent': '40',
-            'isCurrentAnswer': 'true'
-          },
-          {'image': null, 'answer': surveyResult.answers[1].answer, 'percent': '60', 'isCurrentAnswer': 'false'}
-        ]
+        'answers': [{
+          'image': surveyResult.answers[0].image,
+          'answer': surveyResult.answers[0].answer,
+          'percent': '40',
+          'isCurrentAnswer': 'true'
+        }, {
+          'image': null,
+          'answer': surveyResult.answers[1].answer,
+          'percent': '60',
+          'isCurrentAnswer': 'false'
+        }]
       };
 
       await sut.save(surveyResult);

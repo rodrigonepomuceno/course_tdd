@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
-import 'package:course_tdd/ui/helpers/helpers.dart';
-import 'package:course_tdd/ui/pages/pages.dart';
+import 'package:ForDev/ui/helpers/helpers.dart';
+import 'package:ForDev/ui/pages/pages.dart';
 
 import '../../mocks/mocks.dart';
 import '../helpers/helpers.dart';

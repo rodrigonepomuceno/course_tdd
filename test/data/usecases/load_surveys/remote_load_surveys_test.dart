@@ -2,10 +2,10 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/data/http/http.dart';
-import 'package:course_tdd/data/usecases/usecases.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/data/http/http.dart';
+import 'package:ForDev/data/usecases/usecases.dart';
 
 import '../../../mocks/mocks.dart';
 
@@ -17,7 +17,10 @@ void main() {
   String url;
   List<Map> list;
 
-  PostExpectation mockRequest() => when(httpClient.request(url: anyNamed('url'), method: anyNamed('method')));
+  PostExpectation mockRequest() => when(httpClient.request(
+    url: anyNamed('url'),
+    method: anyNamed('method')
+  ));
 
   void mockHttpData(List<Map> data) {
     list = data;

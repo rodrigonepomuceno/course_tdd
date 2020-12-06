@@ -1,12 +1,12 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/usecases/usecases.dart';
-import 'package:course_tdd/ui/helpers/helpers.dart';
-import 'package:course_tdd/ui/pages/pages.dart';
-import 'package:course_tdd/presentation/presenters/presenters.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/usecases/usecases.dart';
+import 'package:ForDev/ui/helpers/helpers.dart';
+import 'package:ForDev/ui/pages/pages.dart';
+import 'package:ForDev/presentation/presenters/presenters.dart';
 
 import '../../mocks/mocks.dart';
 
@@ -42,11 +42,9 @@ void main() {
   test('Should emit correct events on success', () async {
     expectLater(sut.isLoadingStream, emitsInOrder([true, false]));
     sut.surveysStream.listen(expectAsync1((surveys) => expect(surveys, [
-          SurveyViewModel(
-              id: surveys[0].id, question: surveys[0].question, date: '02 Feb 2020', didAnswer: surveys[0].didAnswer),
-          SurveyViewModel(
-              id: surveys[1].id, question: surveys[1].question, date: '20 Dec 2018', didAnswer: surveys[1].didAnswer),
-        ])));
+      SurveyViewModel(id: surveys[0].id, question: surveys[0].question, date: '02 Feb 2020', didAnswer: surveys[0].didAnswer),
+      SurveyViewModel(id: surveys[1].id, question: surveys[1].question, date: '20 Dec 2018', didAnswer: surveys[1].didAnswer),
+    ])));
 
     await sut.loadData();
   });
@@ -70,7 +68,10 @@ void main() {
   });
 
   test('Should go to SurveyResultPage on survey click', () async {
-    expectLater(sut.navigateToStream, emitsInOrder(['/survey_result/any_route', '/survey_result/any_route']));
+    expectLater(sut.navigateToStream, emitsInOrder([
+      '/survey_result/any_route',
+      '/survey_result/any_route'
+    ]));
 
     sut.goToSurveyResult('any_route');
     sut.goToSurveyResult('any_route');

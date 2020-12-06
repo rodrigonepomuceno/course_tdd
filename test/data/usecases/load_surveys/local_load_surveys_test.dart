@@ -1,10 +1,10 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/data/cache/cache.dart';
-import 'package:course_tdd/data/usecases/usecases.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/data/cache/cache.dart';
+import 'package:ForDev/data/usecases/usecases.dart';
 
 import '../../../mocks/mocks.dart';
 
@@ -41,10 +41,8 @@ void main() {
       final surveys = await sut.load();
 
       expect(surveys, [
-        SurveyEntity(
-            id: data[0]['id'], question: data[0]['question'], dateTime: DateTime.utc(2020, 7, 20), didAnswer: false),
-        SurveyEntity(
-            id: data[1]['id'], question: data[1]['question'], dateTime: DateTime.utc(2019, 2, 2), didAnswer: true),
+        SurveyEntity(id: data[0]['id'], question: data[0]['question'], dateTime: DateTime.utc(2020, 7, 20), didAnswer: false),
+        SurveyEntity(id: data[1]['id'], question: data[1]['question'], dateTime: DateTime.utc(2019, 2, 2), didAnswer: true),
       ]);
     });
 
@@ -156,20 +154,17 @@ void main() {
     });
 
     test('Should call cacheStorage with correct values', () async {
-      final list = [
-        {
-          'id': surveys[0].id,
-          'question': surveys[0].question,
-          'date': '2020-02-02T00:00:00.000Z',
-          'didAnswer': 'true',
-        },
-        {
-          'id': surveys[1].id,
-          'question': surveys[1].question,
-          'date': '2018-12-20T00:00:00.000Z',
-          'didAnswer': 'false',
-        }
-      ];
+      final list = [{
+        'id': surveys[0].id,
+        'question': surveys[0].question,
+        'date': '2020-02-02T00:00:00.000Z',
+        'didAnswer': 'true',
+      }, {
+        'id': surveys[1].id,
+        'question': surveys[1].question,
+        'date': '2018-12-20T00:00:00.000Z',
+        'didAnswer': 'false',
+      }];
 
       await sut.save(surveys);
 

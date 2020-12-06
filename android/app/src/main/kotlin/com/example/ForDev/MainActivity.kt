@@ -1,4 +1,4 @@
-package com.example.course_tdd
+package com.example.ForDev
 
 import io.flutter.embedding.android.FlutterActivity
 

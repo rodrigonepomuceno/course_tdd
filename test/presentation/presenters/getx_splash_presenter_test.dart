@@ -1,9 +1,9 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/usecases/usecases.dart';
-import 'package:course_tdd/presentation/presenters/presenters.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/usecases/usecases.dart';
+import 'package:ForDev/presentation/presenters/presenters.dart';
 
 import '../../mocks/mocks.dart';
 
@@ -15,9 +15,11 @@ void main() {
 
   PostExpectation mockLoadCurrentAccountCall() => when(loadCurrentAccount.load());
 
-  void mockLoadCurrentAccount({AccountEntity account}) => mockLoadCurrentAccountCall().thenAnswer((_) async => account);
+  void mockLoadCurrentAccount({AccountEntity account}) =>
+    mockLoadCurrentAccountCall().thenAnswer((_) async => account);
 
-  void mockLoadCurrentAccountError() => mockLoadCurrentAccountCall().thenThrow(Exception());
+  void mockLoadCurrentAccountError() =>
+    mockLoadCurrentAccountCall().thenThrow(Exception());
 
   setUp(() {
     loadCurrentAccount = LoadCurrentAccountSpy();

@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
-import 'package:course_tdd/presentation/protocols/protocols.dart';
-import 'package:course_tdd/validation/validators/validators.dart';
+import 'package:ForDev/presentation/protocols/protocols.dart';
+import 'package:ForDev/validation/validators/validators.dart';
 
 void main() {
   EmailValidation sut;

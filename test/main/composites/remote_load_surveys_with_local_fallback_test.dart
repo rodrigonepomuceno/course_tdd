@@ -1,15 +1,14 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/data/usecases/usecases.dart';
-import 'package:course_tdd/main/composites/composites.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/data/usecases/usecases.dart';
+import 'package:ForDev/main/composites/composites.dart';
 
 import '../../mocks/mocks.dart';
 
 class LocalLoadSurveysSpy extends Mock implements LocalLoadSurveys {}
-
 class RemoteLoadSurveysSpy extends Mock implements RemoteLoadSurveys {}
 
 void main() {
@@ -40,7 +39,10 @@ void main() {
   setUp(() {
     remote = RemoteLoadSurveysSpy();
     local = LocalLoadSurveysSpy();
-    sut = RemoteLoadSurveysWithLocalFallback(remote: remote, local: local);
+    sut = RemoteLoadSurveysWithLocalFallback(
+      remote: remote,
+      local: local
+    );
     mockRemoteLoad();
     mockLocalLoad();
   });

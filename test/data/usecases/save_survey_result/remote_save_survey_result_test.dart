@@ -2,10 +2,10 @@ import 'package:faker/faker.dart';
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/domain/entities/entities.dart';
-import 'package:course_tdd/domain/helpers/helpers.dart';
-import 'package:course_tdd/data/http/http.dart';
-import 'package:course_tdd/data/usecases/usecases.dart';
+import 'package:ForDev/domain/entities/entities.dart';
+import 'package:ForDev/domain/helpers/helpers.dart';
+import 'package:ForDev/data/http/http.dart';
+import 'package:ForDev/data/usecases/usecases.dart';
 
 import '../../../mocks/mocks.dart';
 
@@ -18,8 +18,11 @@ void main() {
   String answer;
   Map surveyResult;
 
-  PostExpectation mockRequest() =>
-      when(httpClient.request(url: anyNamed('url'), method: anyNamed('method'), body: anyNamed('body')));
+  PostExpectation mockRequest() => when(httpClient.request(
+    url: anyNamed('url'),
+    method: anyNamed('method'),
+    body: anyNamed('body')
+  ));
 
   void mockHttpData(Map data) {
     surveyResult = data;
@@ -45,21 +48,23 @@ void main() {
   test('Should return surveyResult on 200', () async {
     final result = await sut.save(answer: answer);
 
-    expect(
-        result,
-        SurveyResultEntity(surveyId: surveyResult['surveyId'], question: surveyResult['question'], answers: [
-          SurveyAnswerEntity(
-            image: surveyResult['answers'][0]['image'],
-            answer: surveyResult['answers'][0]['answer'],
-            isCurrentAnswer: surveyResult['answers'][0]['isCurrentAccountAnswer'],
-            percent: surveyResult['answers'][0]['percent'],
-          ),
-          SurveyAnswerEntity(
-            answer: surveyResult['answers'][1]['answer'],
-            isCurrentAnswer: surveyResult['answers'][1]['isCurrentAccountAnswer'],
-            percent: surveyResult['answers'][1]['percent'],
-          )
-        ]));
+    expect(result, SurveyResultEntity(
+      surveyId: surveyResult['surveyId'],
+      question: surveyResult['question'],
+      answers: [
+        SurveyAnswerEntity(
+          image: surveyResult['answers'][0]['image'],
+          answer: surveyResult['answers'][0]['answer'],
+          isCurrentAnswer: surveyResult['answers'][0]['isCurrentAccountAnswer'],
+          percent: surveyResult['answers'][0]['percent'],
+        ),
+        SurveyAnswerEntity(
+          answer: surveyResult['answers'][1]['answer'],
+          isCurrentAnswer: surveyResult['answers'][1]['isCurrentAccountAnswer'],
+          percent: surveyResult['answers'][1]['percent'],
+        )
+      ]
+    ));
   });
 
   test('Should throw UnexpectedError if HttpClient returns 200 with invalid data', () async {

@@ -1,9 +1,9 @@
 import 'package:mockito/mockito.dart';
 import 'package:test/test.dart';
 
-import 'package:course_tdd/presentation/protocols/protocols.dart';
-import 'package:course_tdd/validation/protocols/protocols.dart';
-import 'package:course_tdd/main/composites/composites.dart';
+import 'package:ForDev/presentation/protocols/protocols.dart';
+import 'package:ForDev/validation/protocols/protocols.dart';
+import 'package:ForDev/main/composites/composites.dart';
 
 class FieldValidationSpy extends Mock implements FieldValidation {}
 
@@ -13,11 +13,14 @@ void main() {
   FieldValidationSpy validation2;
   FieldValidationSpy validation3;
 
-  void mockValidation1(ValidationError error) => when(validation1.validate(any)).thenReturn(error);
+  void mockValidation1(ValidationError error) =>
+    when(validation1.validate(any)).thenReturn(error);
 
-  void mockValidation2(ValidationError error) => when(validation2.validate(any)).thenReturn(error);
+  void mockValidation2(ValidationError error) =>
+    when(validation2.validate(any)).thenReturn(error);
 
-  void mockValidation3(ValidationError error) => when(validation3.validate(any)).thenReturn(error);
+  void mockValidation3(ValidationError error) =>
+    when(validation3.validate(any)).thenReturn(error);
 
   setUp(() {
     validation1 = FieldValidationSpy();
