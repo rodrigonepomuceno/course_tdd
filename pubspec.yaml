@@ -10,6 +10,7 @@ environment:
   sdk: ">=2.7.0 <3.0.0"
 
 dependencies:  
+  flutter_secure_storage: ^3.3.5
   get: ^3.22.2
   equatable: ^1.2.5
   provider: ^4.3.2+2

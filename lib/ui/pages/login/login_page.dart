@@ -15,17 +15,17 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  void _hideKeyboard() {
+    final currectFocus = FocusScope.of(context);
+    if (!currectFocus.hasPrimaryFocus) {
+      currectFocus.unfocus();
+    }
+  }
+
   @override
   void dispose() {
     super.dispose();
     widget.presenter.dispose();
-  }
-
-  void _hideKeyboard() {
-    final currentFocus = FocusScope.of(context);
-    if (!currentFocus.hasPrimaryFocus) {
-      currentFocus.unfocus();
-    }
   }
 
   @override
@@ -68,7 +68,11 @@ class _LoginPageState extends State<LoginPage> {
                               child: PasswordInput(),
                             ),
                             LoginButton(),
-                            FlatButton.icon(onPressed: () {}, icon: Icon(Icons.person), label: Text('Criar Conta'))
+                            FlatButton.icon(
+                              onPressed: () {},
+                              icon: Icon(Icons.person),
+                              label: Text('Criar Conta')
+                            )
                           ],
                         ),
                       ),

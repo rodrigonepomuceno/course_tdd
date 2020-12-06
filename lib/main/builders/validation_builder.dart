@@ -1,12 +1,12 @@
-import 'package:course_tdd/validation/protocols/field_validation.dart';
-import 'package:course_tdd/validation/validators/validators.dart';
+import '../../validation/protocols/protocols.dart';
+import '../../validation/validators/validators.dart';
 
 class ValidationBuilder {
   static ValidationBuilder _instance;
   String fieldName;
   List<FieldValidation> validations = [];
 
-  ValidationBuilder._(); //Torna contrutor privado
+  ValidationBuilder._();
 
   static ValidationBuilder field(String fieldName) {
     _instance = ValidationBuilder._();
