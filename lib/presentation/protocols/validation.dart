@@ -1,5 +1,13 @@
 import 'package:meta/meta.dart';
 
 abstract class Validation {
-  String validate({@required String field, @required String value});
+  ValidationError validate({
+    @required String field,
+    @required Map input
+  });
+}
+
+enum ValidationError {
+  requiredField,
+  invalidField
 }

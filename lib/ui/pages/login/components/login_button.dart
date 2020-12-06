@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../login_presenter.dart';
+import '../../../helpers/helpers.dart';
+import '../login.dart';
 
 class LoginButton extends StatelessWidget {
   @override
@@ -12,7 +13,7 @@ class LoginButton extends StatelessWidget {
       builder: (context, snapshot) {
         return RaisedButton(
           onPressed: snapshot.data == true ? presenter.auth : null,
-          child: Text('Entrar'.toUpperCase()),
+          child: Text(R.string.enter.toUpperCase()),
         );
       }
     );

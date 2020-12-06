@@ -1,61 +1,82 @@
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
-
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-
 import '../protocols/protocols.dart';
+import '../mixins/mixins.dart';
 
-class GetxLoginPresenter extends GetxController implements LoginPresenter {
+class GetxLoginPresenter extends GetxController with LoadingManager, NavigationManager, FormManager, UIErrorManager implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
+  final SaveCurrentAccount saveCurrentAccount;
+  
+  final _emailError = Rx<UIError>();
+  final _passwordError = Rx<UIError>();
   
   String _email;
   String _password;
-  var _emailError = RxString();
-  var _passwordError = RxString();
-  var _mainError = RxString();
-  var _isFormValid = false.obs;
-  var _isLoading = false.obs;
 
-  Stream<String> get emailErrorStream => _emailError.stream;
-  Stream<String> get passwordErrorStream => _passwordError.stream;
-  Stream<String> get mainErrorStream => _mainError.stream;
-  Stream<bool> get isFormValidStream => _isFormValid.stream;
-  Stream<bool> get isLoadingStream => _isLoading.stream;
+  Stream<UIError> get emailErrorStream => _emailError.stream;
+  Stream<UIError> get passwordErrorStream => _passwordError.stream;
 
-  GetxLoginPresenter({@required this.validation, @required this.authentication});
+  GetxLoginPresenter({
+    @required this.validation,
+    @required this.authentication,
+    @required this.saveCurrentAccount
+  });
 
   void validateEmail(String email) {
     _email = email;
-    _emailError.value = validation.validate(field: 'email', value: email);
+    _emailError.value = _validateField('email');
     _validateForm();
   }
 
   void validatePassword(String password) {
     _password = password;
-    _passwordError.value = validation.validate(field: 'password', value: password);
+    _passwordError.value = _validateField('password');
     _validateForm();
   }
 
+  UIError _validateField(String field) {
+    final formData = {
+      'email': _email,
+      'password': _password,
+    };
+    final error = validation.validate(field: field, input: formData);
+    switch (error) {
+      case ValidationError.invalidField: return UIError.invalidField;
+      case ValidationError.requiredField: return UIError.requiredField;
+      default: return null;
+    }
+  }
+
   void _validateForm() {
-    _isFormValid.value = _emailError.value == null
+    isFormValid = _emailError.value == null
       && _passwordError.value == null
       && _email != null
       && _password != null;
   }
 
   Future<void> auth() async {
-    _isLoading.value = true;
     try {
-      await authentication.auth(AuthenticationParams(email: _email, secret: _password));
+      mainError = null;
+      isLoading = true;
+      final account = await authentication.auth(AuthenticationParams(email: _email, secret: _password));
+      await saveCurrentAccount.save(account);
+      navigateTo = '/surveys';
     } on DomainError catch (error) {
-      _mainError.value = error.description;
+      switch (error) {
+        case DomainError.invalidCredentials: mainError = UIError.invalidCredentials; break;
+        default: mainError = UIError.unexpected; break;
+      }
+      isLoading = false;
     }
-    _isLoading.value = false;
   }
 
-  void dispose() {}
+  void goToSignUp() {
+    navigateTo = '/signup';
+  }
 }

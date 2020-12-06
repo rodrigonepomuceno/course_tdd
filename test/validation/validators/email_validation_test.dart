@@ -1,5 +1,6 @@
 import 'package:test/test.dart';
 
+import 'package:course_tdd/presentation/protocols/protocols.dart';
 import 'package:course_tdd/validation/validators/validators.dart';
 
 void main() {
@@ -10,18 +11,19 @@ void main() {
   });
 
   test('Should return null if email is empty', () {
-    expect(sut.validate(''), null);
+    expect(sut.validate({'any_field': ''}), null);
   });
 
   test('Should return null if email is null', () {
-    expect(sut.validate(null), null);
+    expect(sut.validate({}), null);
+    expect(sut.validate({'any_field': null}), null);
   });
 
   test('Should return null if email is valid', () {
-    expect(sut.validate('rodrigo.manguinho@gmail.com'), null);
+    expect(sut.validate({'any_field': 'rodrigo.manguinho@gmail.com'}), null);
   });
 
   test('Should return error if email is invalid', () {
-    expect(sut.validate('rodrigo.manguinho'), 'Campo inválido');
+    expect(sut.validate({'any_field': 'rodrigo.manguinho'}), ValidationError.invalidField);
   });
 }

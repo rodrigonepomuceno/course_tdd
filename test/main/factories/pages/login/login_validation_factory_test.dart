@@ -1,7 +1,7 @@
 import 'package:test/test.dart';
 
-import 'package:ForDev/validation/validators/validators.dart';
-import 'package:ForDev/main/factories/factories.dart';
+import 'package:course_tdd/validation/validators/validators.dart';
+import 'package:course_tdd/main/factories/factories.dart';
 
 void main() {
   test('Should return the correct validations', () {
@@ -10,7 +10,8 @@ void main() {
     expect(validations, [
       RequiredFieldValidation('email'),
       EmailValidation('email'),
-      RequiredFieldValidation('password')
+      RequiredFieldValidation('password'),
+      MinLengthValidation(field: 'password', size: 3)
     ]);
   });
 }
